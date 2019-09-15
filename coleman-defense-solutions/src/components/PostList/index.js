@@ -17,6 +17,12 @@ class PostList extends PureComponent {
          axios.get('http://webservices.theshootingwarehouse.com/smart/Inventory.asmx')
          .then(response => {
              console.log(response)
+             this.setState({posts: response.data})
+             var parseString = require('xml2js').parseString;
+            var xml = "<root>Hello xml2js!</root>"
+            parseString(xml, function (err, result) {
+             console.dir(result, "this is the result");
+});
          })
          .catch(error => {
              console.log(error)
@@ -24,8 +30,16 @@ class PostList extends PureComponent {
     }
 
     render() {
+        const { posts } = this.state
         return (
-            <div> List of Posts </div>
+            <div> 
+                List of Posts
+                {/* {
+                    posts.length ? 
+                    posts.map(post => <div key={post.id}>{post.title}</div>) :
+                    null
+                } */}
+            </div>
         )
     }
 }
