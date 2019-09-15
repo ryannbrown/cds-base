@@ -20,11 +20,7 @@ class PostList extends PureComponent {
              console.log(response)
              this.setState({posts: response.data
             })
-//              var parseString = require('xml2js').parseString;
-//             var xml = "<root>Hello xml2js!</root>"
-//             parseString(xml, function (err, result) {
-//              console.dir(result, "this is the result");
-// });
+
          })
          .catch(error => {
              console.log(error)
@@ -49,3 +45,12 @@ class PostList extends PureComponent {
 }
 
 export default PostList
+
+
+
+//Potential way to parse data
+//              var parseString = require('xml2js').parseString;
+//             var xml = "<root>Hello xml2js!</root>"
+//             parseString(xml, function (err, result) {
+//              console.dir(result, "this is the result");
+// });
