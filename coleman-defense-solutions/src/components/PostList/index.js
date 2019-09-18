@@ -17,14 +17,17 @@ class PostList extends PureComponent {
 
 
     componentDidMount() {
-
+        var jsonObj;
+        var xmlData;
         //  axios.get('https://jsonplaceholder.typicode.com/posts')
-         axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/ActiveItemCount?CustomerNumber=99994&UserName=99994&Password=99998&Source=?')
+         axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/CategorySearchFieldsDS?CustomerNumber=99994&UserName=99994&Password=99998&Source=47538')
          .then(xmlData => {
-             console.log(xmlData)
+             console.log(xmlData.data)
              this.setState({posts: xmlData.data })
+             jsonObj = parser.parse(xmlData.data);
+              console.log(jsonObj)
         })
-    }
+}
 
 
 
@@ -34,15 +37,7 @@ class PostList extends PureComponent {
     //      axios.get('/smart/inventory.asmx/ActiveItemCount?CustomerNumber=99994&UserName=99994&Password=99998&Source=47538', {
     //           headers: { 'Access-Control-Allow-Origin' : 'http://localhost:*'},
     //           proxy: { host: "webservices.theshootingwarehouse.com"}})
-    //      .then(xmlData => {
-    //          console.log(xmlData)
-    //          this.setState({posts: xmlData.data })
-    //     }).then(jsonObj = parser.parse(xmlData))
-    //      .catch(error => {
-    //          console.log(error)
-    //          this.setState({errorMsg: 'Error retreiving data'})
-    //      })
-    // }
+   
 
     render() {
         const { posts, errorMsg } = this.state
