@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import axios from 'axios'
 var Client = require('ftp');
 var csv = require('fast-csv');
+var parser = require('fast-xml-parser');
  
 
 class PostList extends PureComponent {
@@ -16,45 +17,32 @@ class PostList extends PureComponent {
 
 
     componentDidMount() {
-        var hostName = "ftp.davidsonsinventory.com";
-        var userName = "ftp58074930-1e";
-        var password = "DavDealerInv";
-        var fileName = 'davidsons_firearm_attributes.csv';
-        var c = new Client();
-        c.on('ready', function() {
-            c.get(fileName, function(err, stream) {
-                if (err) throw err;
-                stream.once('close', function() { c.end(); });
-                csv.fromStream(stream,  {headers: true})
-                    .on("data", function(data){
-                    console.log(data);
-                })
-                    .on("end", function(){
-                        console.log("done");
-                    });
-            });
-        });
-        c.connect({host:hostName,
-            user: userName,
-            password:password
-        })
 
-        
-
-        
         //  axios.get('https://jsonplaceholder.typicode.com/posts')
-        // //  axios.get('http://webservices.theshootingwarehouse.com/smart/Inventory.asmx')
-        //  .then(response => {
-        //      console.log(response)
-        //      this.setState({posts: response.data
-        //     })
-
-        //  })
-         .catch(error => {
-             console.log(error)
-             this.setState({errorMsg: 'Error retreiving data'})
-         })
+         axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/ActiveItemCount?CustomerNumber=99994&UserName=99994&Password=99998&Source=?')
+         .then(xmlData => {
+             console.log(xmlData)
+             this.setState({posts: xmlData.data })
+        })
     }
+
+
+
+    //         var jsonObj;
+    //         var xmlData;
+    //     //  axios.get('https://jsonplaceholder.typicode.com/posts')
+    //      axios.get('/smart/inventory.asmx/ActiveItemCount?CustomerNumber=99994&UserName=99994&Password=99998&Source=47538', {
+    //           headers: { 'Access-Control-Allow-Origin' : 'http://localhost:*'},
+    //           proxy: { host: "webservices.theshootingwarehouse.com"}})
+    //      .then(xmlData => {
+    //          console.log(xmlData)
+    //          this.setState({posts: xmlData.data })
+    //     }).then(jsonObj = parser.parse(xmlData))
+    //      .catch(error => {
+    //          console.log(error)
+    //          this.setState({errorMsg: 'Error retreiving data'})
+    //      })
+    // }
 
     render() {
         const { posts, errorMsg } = this.state
