@@ -19,13 +19,13 @@ class PostList extends PureComponent {
     componentDidMount() {
         var jsonObj;
         var xmlData;
-        //  axios.get('https://jsonplaceholder.typicode.com/posts')
-         axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/CategorySearchFieldsDS?CustomerNumber=99994&UserName=99994&Password=99998&Source=47538')
+        //  axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/CategorySearchFieldsDS?CustomerNumber=99994&UserName=99994&Password=99998&Source=47538')
+        axios.get('http://webservices.theshootingwarehouse.com/smart/inventory.asmx/DailyItemUpdate?CustomerNumber=?&UserName=?&Password=?&LastUpdate=1/1/1990&LastItem=-1&Source=?')
          .then(xmlData => {
-             console.log(xmlData.data)
+             console.log(xmlData)
              this.setState({posts: xmlData.data })
              jsonObj = parser.parse(xmlData.data);
-              console.log(jsonObj)
+              console.log("json", jsonObj)
         })
 }
 
@@ -43,7 +43,7 @@ class PostList extends PureComponent {
         const { posts, errorMsg } = this.state
         return (
             <div> 
-                List of Posts
+               Retrieving all items
             </div>
         )
     }
