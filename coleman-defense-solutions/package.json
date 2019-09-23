@@ -9,8 +9,11 @@
     "fast-csv": "^3.4.0",
     "fast-xml-parser": "^3.12.20",
     "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "xml-js": "^1.6.11",
     "xml2js": "^0.4.22"
   },
   "scripts": {
