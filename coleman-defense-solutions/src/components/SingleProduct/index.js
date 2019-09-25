@@ -1,15 +1,17 @@
 import React from 'react';
 import { Card, ListGroup, ListGroupItem, Button, Image } from 'react-bootstrap';
-function SingleProduct() {
+import App from '../../App'
+
+const SingleProduct = (props) => {
 
     return (
 
 <Card style={{ width: '18rem' }}>
   <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
   <Card.Body>
-    <Card.Title>Gun Name</Card.Title>
+    <Card.Title>{props.name}</Card.Title>
     <Card.Text>
-      This is a description of the gun
+    {props.itemDesc}
     </Card.Text>
   </Card.Body>
   <ListGroup className="list-group-flush">
