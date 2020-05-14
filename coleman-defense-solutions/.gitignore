@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.env
+
+resources.txt
+
+api.txt
+
+package.json
+
+src/api/api.txt
