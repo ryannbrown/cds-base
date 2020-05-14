@@ -10,27 +10,50 @@ class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoggedIn: this.props.isLoggedIn,
             editSession: false,
             posts:[],
-            updatePosts: false
+            updatePosts: false,
+            itemDeleted: false,
+            itemPosted: null,
+            pageRefresh: false
         };
         this.handleDelete = this.handleDelete.bind(this);
     }
 
-
+    usePlaceholderImg(ev){
+        ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
+        console.log(ev);
+      }
 
     addItem = (event) => {
        this.setState({
             editSession:true
         })
     }
+   refreshFeed = (event) => {
+       this.setState({
+           pageRefresh: true
+       }, console.log(this.state.pageRefresh))
+    }
 
 
-    handleDelete(id) {
+    fetchPosts() {
+        fetch(`/api/posts`)
+        .then(res => res.json())
+        .then(json => {
+          console.log("json", json)
+          this.setState({
+              posts:json.data
+          })
+        })
+    }
+
+    handleDelete = id => {
         let item_id = id
         console.log("deleting", item_id)
 
-       function deleteItem(){
+       const deleteItem = () =>{
            console.log("posting to DB")
             // POST TO DB
             fetch('/api/remove_post', {
@@ -43,22 +66,20 @@ class AdminPanel extends Component {
                     id: item_id,
                 })
             })
-         
+            this.setState({
+                itemDeleted:true
+            })
         }
         deleteItem();
-        window.location.reload();
+        this.fetchPosts()
     }
 
-componentDidMount() {
-        fetch(`/api/posts`)
-        .then(res => res.json())
-        .then(json => {
-          console.log("json", json)
-          this.setState({
-              posts:json.data
-          })
-        })
+componentDidMount () {
+
+    this.fetchPosts();
+    
     }
+
 
     render() {
         console.log(this.state.posts)
@@ -66,12 +87,11 @@ componentDidMount() {
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card'>
             <i onClick={() => this.handleDelete(item.id)} class="fas fa-trash-alt delete-icon"></i>
-            <p className="text-center">${item.product_name}</p>
-       {/* <img className="gun-img" alt={`${item.itemdesc1}`}
-       // TODO: come up with better way to get images than this solution
-        src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
+            <p className="text-center">{item.product_name}</p>
+       <img className="gun-img" alt={`${item.itemdesc1}`}
+        src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
-        /> */}
+        />
          <p className="text-center">{item.product_description}</p>
          <p className="text-center">{item.msrp_price}</p>
          <p className="text-center">{item.sale_price}</p>
@@ -81,7 +101,7 @@ componentDidMount() {
 
         const placeholderText = <div>There are no items in inventory</div>
 
-
+// TO DO: Pass in isloggedin props
         if (editSession) {
             return (
                 <AddItem></AddItem>
@@ -91,7 +111,7 @@ componentDidMount() {
         if (this.state.posts.length === 0) {
             return (
                 <div className="text-center m-5">
-                    <Button onClick={this.addItem}>Add Item</Button>
+                    <Button style={{ backgroundColor: '#dd6717' }} variant='dark' onClick={this.addItem}>Add Item</Button>
                     <div className="mt-5">Current Inventory:</div>
                     <div className="mt-3">
                     {placeholderText}
@@ -105,7 +125,9 @@ componentDidMount() {
             return (
 
                 <div className="text-center m-5">
-                    <Button onClick={this.addItem}>Add Item</Button>
+                   
+                    <Button style={{ backgroundColor: '#dd6717' }} variant='dark' onClick={this.addItem}>Add Item</Button>
+                    <i onClick={this.refreshFeed} style={{display: 'block'}} class="fas fa-sync-alt mt-3"></i>
                     <div className="mt-5">Current Inventory:</div>
                     <CardDeck>
                      {items}

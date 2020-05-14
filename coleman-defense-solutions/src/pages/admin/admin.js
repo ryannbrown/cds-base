@@ -13,7 +13,7 @@ class AdminPage extends Component {
         super(props);
         this.state = {
             data: [],
-            isLoggedIn: true,
+            isLoggedIn: false,
             catData: [],
             email: '',
             pass: ''
@@ -72,9 +72,10 @@ class AdminPage extends Component {
 
             );
         }
+        // TODO: PASS in is logged in props
         if (isLoggedIn) {
             return (
-                <AdminPanel></AdminPanel>
+                <AdminPanel isLoggedIn ={isLoggedIn}></AdminPanel>
 
             );
         }

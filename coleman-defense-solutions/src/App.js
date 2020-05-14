@@ -25,6 +25,7 @@ import Inventory from './pages/inventory/Inventory';
 import Browse from './pages/inventory/Browse';
 import Details from './pages/inventory/Details';
 import AdminPage from './pages/admin/admin';
+import CdsInventory from "./pages/inventory/CdsInventory";
 
 
 export default function App(){
@@ -61,6 +62,8 @@ export default function App(){
           <Route path="/admin" component={AdminPage}/>
 
           <Route path="/api/post" component={AdminPage}/>
+
+          <Route path="/cds/inventory" component={CdsInventory}/>
 
      
           </Switch> 
