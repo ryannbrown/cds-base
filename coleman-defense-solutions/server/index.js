@@ -4,33 +4,15 @@ const morgan = require('morgan');
 
 // aws bucket
 const AWS = require('aws-sdk');
-const fs = require('fs');
-const fileType = require('file-type');
-const bluebird = require('bluebird');
-const multiparty = require('multiparty');
 require('dotenv').config();
 const Busboy = require('busboy');
+const busboy = require('connect-busboy');
+const busboyBodyParser = require('busboy-body-parser')
 
+app.use(busboy())
+app.use(busboyBodyParser())
 
 app.use(morgan('dev'));
-
-// configure the keys for accessing AWS
-// AWS.config.update({
-//   // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-//   region: 'us-east-2'
-// });
-
-// configure AWS to work with promises
-// AWS.config.setPromisesDependency(bluebird);
-
-
-// // create S3 instance
-// const s3 = new AWS.S3();
-
-
-
-
 
 
 const pino = require('express-pino-logger')();
@@ -38,14 +20,13 @@ const pino = require('express-pino-logger')();
 // DB
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'postgres',
+  user: process.env.DB_USER,
   host: 'localhost',
   database: 'postgres',
-  password: 'Pass1234',
+  password: process.env.DB_PASS,
   port: 5432,
 })
 //
-
 
 
 // body parser to read requests
@@ -70,10 +51,6 @@ app.get('/browse/:criteria', (req, response) => {
 
     var data = results.rows
     response.send(JSON.stringify({ data }));
-
-    //   const name = req.query.name || 'World';
-    //   response.setHeader('Content-Type', 'application/json');
-    //   response.send(JSON.stringify({ results }));
   });
 
 
@@ -130,6 +107,7 @@ app.get('/api/model/:item_no', (req, response) => {
 
 let posts = []
 app.post('/api/post', function (req, res) {
+console.log("keys")
   const newPost = {
     image: req.body.image,
     product_name: req.body.product_name,
@@ -139,17 +117,12 @@ app.post('/api/post', function (req, res) {
   };
 
   posts.push(newPost)
-  // console.log("posts", posts)
-  // console.log("body", req.body)
   pool.query(
     `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
     VALUES(uuid_generate_v4(),'${newPost.image}', '${newPost.product_name}', '${newPost.product_description}', '${newPost.msrp_price}', '${newPost.sale_price}');`, (error, results) => {
-      // console.log(error, results);
       if (error) {
         throw error
       }
-  
-      // var data = results.rows
       res.send('POST request to the homepage')
     }
   );
@@ -160,12 +133,9 @@ app.get('/api/posts', function (req, response) {
   
   pool.query(
     "SELECT * from cds_inventory", (error, results) => {
-      // console.log(error, results);
       if (error) {
         throw error
       }
-  
-      // var data = results.rows
       var data = results.rows
       response.send(JSON.stringify({ data }));
     }
@@ -189,11 +159,15 @@ app.delete('/api/remove_post', function (req, response) {
 })
 
 
+const BUCKET_NAME = process.env.NAME;
+const ACCESS = process.env.ACCESS
+const SECRET = process.env.SECRET
 
+// TODO: be able to remove pictures from S3 programmatically? 
 function uploadToS3(file) {
   let s3bucket = new AWS.S3({
-    accessKeyId: IAM_USER_KEY,
-    secretAccessKey: IAM_USER_SECRET,
+    accessKeyId: ACCESS,
+    secretAccessKey: SECRET,
     Bucket: BUCKET_NAME
   });
   s3bucket.createBucket(function () {
@@ -214,9 +188,9 @@ function uploadToS3(file) {
 }
 
 app.post('/api/upload', function (req, res, next) {
-  // This grabs the additional parameters so in this case passing in
-  // "element1" with a value.
-  console.log(req.body)
+
+  console.log("body", req.body)
+  // console.log("req", req)
   const element1 = req.body.element1;
 console.log(element1)
   var busboy = new Busboy({ headers: req.headers });
@@ -224,94 +198,17 @@ console.log(element1)
   // The file upload has completed
   busboy.on('finish', function() {
     console.log('Upload finished');
-    
-    // Your files are stored in req.files. In this case,
-    // you only have one and it's req.files.element2:
-    // This returns:
-    // {
-    //    element2: {
-    //      data: ...contents of the file...,
-    //      name: 'Example.jpg',
-    //      encoding: '7bit',
-    //      mimetype: 'image/png',
-    //      truncated: false,
-    //      size: 959480
-    //    }
-    // }
-    
-    // Grabs your file object from the request.
-    // const file = req.files.element2;
-    // console.log(file);
-    console.log(req.files)
-    
-    // Begins the upload to the AWS S3
-    // uploadToS3(file);
+    const file = req.files.element1;
+    console.log(file);
+ 
+    uploadToS3(file);
   });
 
   req.pipe(busboy);
 });
 
-// abstracts function to upload a file returning a promise
-// const uploadFile = (buffer, name, type) => {
-//   console.log("something good happened")
-//   // console.log("name", name)
-//   // console.log("data", data)
-//   const params = {
-//     ACL: 'public-read',
-//     Body: buffer,
-//     Bucket: 'cdsinventoryimages',
-//     ContentType: type.mime,
-//     Key: `${name}.${type.ext}`,
-//   };
-//   return s3.upload(params).promise();
-// };
-
-// Define POST route
-// app.post('/api/test-upload', (request, response) => {
-//   console.log("this happened")
-//   // console.log("body", response.body)
-//   // console.log("request", request)
-//   // console.log("response", response)
-//   const form = new multiparty.Form();
-//     form.parse(request, async (error, fields, files) => {
-//     // console.log("files", files)
-//     console.log("fields", fields)
-//       // if (error) throw new Error(error);
-//       try {
-//         const path = fields.file[0].path;
-//         const buffer = fs.readFileSync(path);
-//         const type = fileType(buffer);
-//         const timestamp = Date.now().toString();
-//         const fileName = `bucketFolder/${timestamp}-lg`;
-//         const data = await uploadFile(buffer, fileName, type);
-//         return response.status(200).send(data);
-//       } catch (error) {
-//         return response.status(400).send(error);
-//       }
-//     });
-// });
-// //
-// app.post('/api/test-upload', (request, response) => {
-//   console.log(response)
-//   const form = new multiparty.Form();
-//     form.parse(request, async (error, fields, files) => {
-//       if (error) throw new Error(error);
-//       try {
-//         const path = files.file[0].path;
-//         const buffer = fs.readFileSync(path);
-//         const type = fileType(buffer);
-//         const timestamp = Date.now().toString();
-//         const fileName = `bucketFolder/${timestamp}-lg`;
-//         const data = await uploadFile(buffer, fileName, type);
-//         return response.status(200).send(data);
-//       } catch (error) {
-//         return response.status(400).send(error);
-//       }
-//     });
-// });
-
 app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
+  console.log(`Express server is running on localhost:3001`)
 );
 
  

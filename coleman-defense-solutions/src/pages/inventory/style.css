@@ -37,12 +37,18 @@ font-family: 'Russo One', sans-serif;
     }
 }
 
-
+/* 
 .gun-img{
     max-width:200px;
     max-height:300px;
     margin:0px auto;
+} */
+.gun-img {
+    max-width: 90%;
+    max-height: 300px;
+    margin: 0px auto;
 }
+
 .gun-img-detailspg{
     max-width:100%;
     max-height:auto;
