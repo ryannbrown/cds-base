@@ -1,0 +1,35 @@
+ .card-deck .card {
+    flex: 1 0 21%;
+    margin-bottom:20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* .card-img-top {
+    height:25%;
+} */
+
+
+
+/*remove white space from gun titles*/
+/* @media(min-width:992px) {
+.title-text{
+    margin-bottom: -80%;
+} */
+
+/* .button-box {
+    margin-bottom:-50%;
+} */
+/* } */
+
+.more-info-btn {
+    margin: 0px auto;
+}
+
+.button-box {
+    margin-top:1px;
+    border: 2px solid #28a745;
+    background-color:#e0f1e4;
+}
+
+

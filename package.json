@@ -1,5 +1,6 @@
 {
   "name": "cds-base",
+  "proxy": "http://localhost:3001",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,6 +16,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "server": "node-env-run server --exec nodemon",
+    "dev": "run-p server start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,4 +30,5 @@
     "url": "https://github.com/ryannbrown/cds-base/issues"
   },
   "homepage": "https://github.com/ryannbrown/cds-base#readme"
+
 }
