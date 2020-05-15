@@ -86,7 +86,7 @@ componentDidMount () {
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card'>
-            <i onClick={() => this.handleDelete(item.id)} class="fas fa-trash-alt delete-icon"></i>
+            <span onClick={() => this.handleDelete(item.id)} className="delete-icon">X</span>
             <p className="text-center">{item.product_name}</p>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
@@ -127,7 +127,7 @@ componentDidMount () {
                 <div className="text-center m-5">
                    
                     <Button style={{ backgroundColor: '#dd6717' }} variant='dark' onClick={this.addItem}>Add Item</Button>
-                    <i onClick={this.refreshFeed} style={{display: 'block'}} class="fas fa-sync-alt mt-3"></i>
+                    {/* <i onClick={this.refreshFeed} style={{display: 'block'}} className="mt-3">refresh</i> */}
                     <div className="mt-5">Current Inventory:</div>
                     <CardDeck>
                      {items}

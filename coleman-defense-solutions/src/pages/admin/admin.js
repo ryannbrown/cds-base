@@ -61,9 +61,6 @@ class AdminPage extends Component {
                             <Form.Label>Password</Form.Label>
                             <Form.Control ref={this.pass} type="password" placeholder="Password" />
                         </Form.Group>
-                        <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group>
                         <Button style={{ backgroundColor: '#dd6717' }} variant='dark' type="submit">
                             Submit
         </Button>
