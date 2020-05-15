@@ -17,7 +17,7 @@ import Nav from "./components/Navbar";
 // import xml2js from 'xml2js';
 // import axios from "axios";
 import Home from '../src/pages/Home';
-import About from '../src/pages/About';
+import About from '../src/pages/index.js';
 import Shotguns from './pages/inventory/Shotguns';
 import Pistols from './pages/inventory/Pistols';
 import Rifles from './pages/inventory/Rifles';
@@ -26,6 +26,8 @@ import Browse from './pages/inventory/Browse';
 import Details from './pages/inventory/Details';
 import AdminPage from './pages/admin/admin';
 import CdsInventory from "./pages/inventory/CdsInventory";
+import Transfers from "./pages/Transfers.js"
+// import transfers from "./pages/transfers.js ";
 
 
 export default function App(){
@@ -64,6 +66,8 @@ export default function App(){
           <Route path="/api/post" component={AdminPage}/>
 
           <Route path="/cds/inventory" component={CdsInventory}/>
+          <Route path="/cds/transfers" component={Transfers}/>
+          {/* <Route path="/cds/transfers" component={transfers}/> */}
 
      
           </Switch> 

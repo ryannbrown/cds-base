@@ -65,11 +65,6 @@ class AddItem extends Component {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
-            // https://dish-it-project.s3.amazonaws.com/bucketFolder/1567116449303-lg.jpg
-            // https://cdsinventoryimages.s3.amazonaws.com/fb.jpg
-
-            // https://cdsinventoryimages.s3.us-east-2.amazonaws.com/field.jpg
-
         const postItem = () => {
             console.log("posting to DB")
             // POST TO DB
@@ -89,7 +84,7 @@ class AddItem extends Component {
                 }).then(response => {
                     console.log("hey i did it")
                     console.log(response)
-                    if (response.status === '200') {
+                    if (response.status == '200') {
                         this.setState({
                             itemPosted: true
                         })

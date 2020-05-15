@@ -80,6 +80,7 @@ usePlaceholderImg(ev){
       <a href={`/api/model/${item.item_no}`}>
    <img className="gun-img" alt={`${item.itemdesc1}`}
    // TODO: come up with better way to get images than this solution
+  //  TODO: make images pop up on click perhaps https://www.npmjs.com/package/react-image-lightbox
     src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
     onError={this.usePlaceholderImg}
     />
