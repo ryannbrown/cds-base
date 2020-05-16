@@ -26,7 +26,7 @@ const pool = new Pool({
   password: process.env.DB_PASS,
   port: 5432,
 })
-//
+
 
 
 // body parser to read requests
