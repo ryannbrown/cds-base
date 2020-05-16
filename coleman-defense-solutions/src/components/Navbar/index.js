@@ -27,8 +27,8 @@ function Navigation (props) {
         <NavDropdown title="Browse by" id="basic-nav-dropdown">
           <NavDropdown.Item href="/cds/inventory">In House Inventory</NavDropdown.Item>
           <NavDropdown.Item href="/browse/manufacturer">Manufacturer</NavDropdown.Item>
-          <NavDropdown.Item href="/browse/gun_type">Gun Type</NavDropdown.Item>
-          <NavDropdown.Item href="/browse/gun_action">Gun Action</NavDropdown.Item>
+          {/* <NavDropdown.Item href="/browse/gun_type">Gun Type</NavDropdown.Item>
+          <NavDropdown.Item href="/browse/gun_action">Gun Action</NavDropdown.Item> */}
           {/* <NavDropdown.Item href="/rifles" value="rifles">Rifles</NavDropdown.Item>
           <NavDropdown.Item href="/pistols">Pistols</NavDropdown.Item> */}
           <NavDropdown.Divider />

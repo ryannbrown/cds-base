@@ -29,5 +29,7 @@ resources.txt
 api.txt
 
 package.json
+package-lock.json
+
 
 src/api/api.txt

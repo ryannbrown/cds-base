@@ -348,9 +348,14 @@ a.transfers-link.nav-link {
 }
 
 img.pulse {
-  width: 50%;
+  width: 35%;
   margin: 10%;
 }
+img.pulse:hover {
+ opacity:.8;
+}
+
+
 
 .bio-box {
   padding: 5%;

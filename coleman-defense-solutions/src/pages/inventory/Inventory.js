@@ -76,7 +76,7 @@ usePlaceholderImg(ev){
     var { param } = this.state;
     // console.log({this.state.gunData.image1})
     const items = this.state.gunData.map((item, i) =>
-    <Card className= 'inventory-card'>
+    <Card key={i}> className= 'inventory-card'>
       <a href={`/api/model/${item.item_no}`}>
    <img className="gun-img" alt={`${item.itemdesc1}`}
    // TODO: come up with better way to get images than this solution
