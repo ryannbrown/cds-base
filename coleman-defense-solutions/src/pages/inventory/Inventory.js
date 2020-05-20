@@ -3,19 +3,8 @@ import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-b
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PaginationComponent from "../../components/Pagination"
 import "../Home";
-import Nav from "../../components/Navbar";
-import SingleProduct from "../../components/SingleProduct";
-import ProductList from "../../components/ProductList";
-import CategoryName from "../../components/CategoryName/CategoryName";
-import { resolveNaptr } from "dns";
-import xml2js from 'xml2js';
-import axios from "axios";
-import App from "../../App";
-import Spinner from 'react-bootstrap/Spinner';
-import * as firebase from 'firebase';
-const queryString = require('query-string');
+
 
 
 require("dotenv").config();
@@ -30,12 +19,6 @@ class Inventory extends Component {
       param: ''
     };
   }
-
-//  imgError = image => {
-//     image.onerror = "";
-//     image.src = "https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg";
-//     return true;
-// }
 
 
 usePlaceholderImg(ev){
@@ -76,7 +59,7 @@ usePlaceholderImg(ev){
     var { param } = this.state;
     // console.log({this.state.gunData.image1})
     const items = this.state.gunData.map((item, i) =>
-    <Card key={i}> className= 'inventory-card'>
+    <Card key={i} className= 'inventory-card'>
       <a href={`/api/model/${item.item_no}`}>
    <img className="gun-img" alt={`${item.itemdesc1}`}
    // TODO: come up with better way to get images than this solution

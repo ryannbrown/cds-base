@@ -105,58 +105,77 @@ app.get('/api/model/:item_no', (req, response) => {
 
 })
 
-let posts = []
-app.post('/api/post', function (req, res) {
-console.log("keys")
-  const newPost = {
-    image: req.body.image,
-    product_name: req.body.product_name,
-    product_description: req.body.product_description,
-    msrp_price: req.body.msrp_price,
-    sale_price: req.body.sale_price
-  };
+var pg = require('pg');
 
-  posts.push(newPost)
-  pool.query(
-    `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
-    VALUES(uuid_generate_v4(),'${newPost.image}', '${newPost.product_name}', '${newPost.product_description}', '${newPost.msrp_price}', '${newPost.sale_price}');`, (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.send('POST request to the homepage')
-    }
-  );
-})
+var conString = process.env.CONNSTRING //Can be found in the Details page
+var client = new pg.Client(conString);
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
 
 
-app.get('/api/posts', function (req, response) {
+
+
+
+
+  let posts = []
+  app.post('/api/post', function (req, res) {
+  console.log("keys")
+    const newPost = {
+      image: req.body.image,
+      product_name: req.body.product_name,
+      product_description: req.body.product_description,
+      msrp_price: req.body.msrp_price,
+      sale_price: req.body.sale_price
+    };
   
-  pool.query(
-    "SELECT * from cds_inventory", (error, results) => {
-      if (error) {
-        throw error
+    posts.push(newPost)
+    client.query(
+      `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
+      VALUES(uuid_generate_v4(),'${newPost.image}', '${newPost.product_name}', '${newPost.product_description}', '${newPost.msrp_price}', '${newPost.sale_price}');`, (error, results) => {
+        if (error) {
+          throw error
+        }
+        res.send('POST request to the homepage')
       }
-      var data = results.rows
-      response.send(JSON.stringify({ data }));
-    }
-  );
-})
-app.delete('/api/remove_post', function (req, response) {
-  let id = req.body.id
-  console.log(id);
-  pool.query(
-    `DELETE FROM cds_inventory WHERE id = '${id}' `, (error, results) => {
-      console.log(error, results);
-      if (error) {
-        throw error
-      }
+    );
+  })
   
-      // var data = results.rows
-      var data = results.rows
-      response.send(JSON.stringify({ data }));
-    }
-  );
-})
+  
+  app.get('/api/posts', function (req, response) {
+    
+   client.query(
+      "SELECT * from cds_inventory", (error, results) => {
+        if (error) {
+          throw error
+        }
+        var data = results.rows
+        response.send(JSON.stringify({ data }));
+      }
+    );
+  })
+  app.delete('/api/remove_post', function (req, response) {
+    let id = req.body.id
+    console.log(id);
+    client.query(
+      `DELETE FROM cds_inventory WHERE id = '${id}' `, (error, results) => {
+        console.log(error, results);
+        if (error) {
+          throw error
+        }
+    
+        // var data = results.rows
+        var data = results.rows
+        response.send(JSON.stringify({ data }));
+      }
+    );
+  })
+});
+
+
+
+
 
 
 const BUCKET_NAME = process.env.NAME;

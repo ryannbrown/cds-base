@@ -17,10 +17,6 @@ import Nav from "./components/Navbar";
 // import xml2js from 'xml2js';
 // import axios from "axios";
 import Home from '../src/pages/Home';
-import About from '../src/pages/index.js';
-import Shotguns from './pages/inventory/Shotguns';
-import Pistols from './pages/inventory/Pistols';
-import Rifles from './pages/inventory/Rifles';
 import Inventory from './pages/inventory/Inventory';
 import Browse from './pages/inventory/Browse';
 import Details from './pages/inventory/Details';
@@ -30,58 +26,45 @@ import Transfers from "./pages/Transfers.js"
 // import transfers from "./pages/transfers.js ";
 
 
-export default function App(){
+export default function App() {
 
   return (
-      <Router>
-        <div>
-          <Nav></Nav>
-      
-           <Switch>
-             <Route exact path="/" component={() =>
-                 <Home
-                 />} />  
-          <Route path="/about" component={() =>
-              <About
-              />} />
-       
-          <Route path="/shotguns" component={() =>
-              <Shotguns
-              />} />
-          <Route path="/pistols" component={() =>
-              <Pistols
-              />} />
-          <Route path="/rifles" component={() =>
-              <Rifles
-              />} />
+    <Router>
+      <div>
+        <Nav></Nav>
 
-          <Route path="/browse/:criteria" component={Browse}/>
-              
-          <Route path="/inventory/:brand_name" component={Inventory}/>
+        <Switch>
+          <Route exact path="/" component={() =>
+            <Home
+            />} />
 
-          <Route path="/api/model/:item_no" component={Details}/>
+          <Route path="/browse/:criteria" component={Browse} />
 
-          <Route path="/admin" component={AdminPage}/>
+          <Route path="/inventory/:brand_name" component={Inventory} />
 
-          <Route path="/api/post" component={AdminPage}/>
+          <Route path="/api/model/:item_no" component={Details} />
 
-          <Route path="/cds/inventory" component={CdsInventory}/>
-          <Route path="/cds/transfers" component={Transfers}/>
+          <Route path="/admin" component={AdminPage} />
+
+          <Route path="/api/post" component={AdminPage} />
+
+          <Route path="/cds/inventory" component={CdsInventory} />
+          <Route path="/cds/transfers" component={Transfers} />
           {/* <Route path="/cds/transfers" component={transfers}/> */}
 
-     
-          </Switch> 
 
-         
-        </div>
-        </Router>
-        
-      );
+        </Switch>
 
 
-// function Child() {
-//   let { brand_name } = useParams();
-// }
+      </div>
+    </Router>
 
-    }
+  );
+
+
+  // function Child() {
+  //   let { brand_name } = useParams();
+  // }
+
+}
 
