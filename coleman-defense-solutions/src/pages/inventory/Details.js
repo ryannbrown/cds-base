@@ -3,18 +3,8 @@ import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table } from '
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PaginationComponent from "../../components/Pagination"
 import "../Home";
-import Nav from "../../components/Navbar";
-import SingleProduct from "../../components/SingleProduct";
-import ProductList from "../../components/ProductList";
-import CategoryName from "../../components/CategoryName/CategoryName";
-import { resolveNaptr } from "dns";
-import xml2js from 'xml2js';
-import axios from "axios";
-import App from "../../App";
-import Spinner from 'react-bootstrap/Spinner';
-import * as firebase from 'firebase';
+
 const queryString = require('query-string');
 
 

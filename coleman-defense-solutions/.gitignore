@@ -33,3 +33,7 @@ package-lock.json
 
 
 src/api/api.txt
+
+.openode
+
+elephantsql.js

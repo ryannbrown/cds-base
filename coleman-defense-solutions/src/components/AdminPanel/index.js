@@ -1,6 +1,5 @@
 
 import React, { Component } from "react";
-import Carousel from 'react-bootstrap/Carousel'
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
 import App from '../../App'
 import AddItem from '../AddItem'

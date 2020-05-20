@@ -2,22 +2,12 @@ import React, { Component, Fragment } from "react";
 
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PaginationComponent from "../components/Pagination"
 import "./Home.css";
-import Nav from "../components/Navbar";
-import SingleProduct from "../components/SingleProduct";
-import ProductList from "../components/ProductList";
-import { resolveNaptr } from "dns";
-import xml2js from 'xml2js';
-import axios from "axios";
-import App from "../App";
 
-import Image from 'react-bootstrap/Image'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import CarouselSlider from "../components/Carousel"
 import Bio from "../components/bio/bio"
 import MobileBoxes from "../components/boxes/boxes"
 import insta from "../media/instagram.png"
