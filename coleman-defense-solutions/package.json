@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "fast-csv": "^3.7.0",
     "fast-xml-parser": "^3.16.0",
-    "file-type": "^14.3.0",
+    "file-type": "^16.5.4",
     "firebase": "^7.14.2",
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
